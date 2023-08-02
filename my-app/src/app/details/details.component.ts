@@ -1,7 +1,7 @@
 import { Component,  } from '@angular/core';
 import { ItemsService } from '../items.service';
 import { ActivatedRoute } from '@angular/router';
-import { itemI } from '../interfaces/itemInterfaces';
+import { itemI } from '../shared/interfaces/itemInterfaces';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 

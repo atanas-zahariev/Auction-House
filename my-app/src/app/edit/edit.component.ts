@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ItemsService } from '../items.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { itemI } from '../interfaces/itemInterfaces';
+import { itemI } from '../shared/interfaces/itemInterfaces';
 
 @Component({
   selector: 'app-edit',

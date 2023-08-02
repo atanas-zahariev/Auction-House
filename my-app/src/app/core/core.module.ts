@@ -2,17 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { DefaultComponent } from './default/default.component';
 
 
 
 @NgModule({
   declarations: [
-    NavigationComponent
+    NavigationComponent,
+    DefaultComponent
   ],
   imports: [
     CommonModule,
     AppRoutingModule
   ],
-  exports:[NavigationComponent]
+  exports:[NavigationComponent,DefaultComponent]
 })
 export class CoreModule { }

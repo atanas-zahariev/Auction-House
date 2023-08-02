@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { DetailsComponent } from './details/details.component';
-import { DefaultComponent } from './default/default.component';
+import { DefaultComponent } from './core/default/default.component';
 import { CloseOfferComponent } from './close-offer/close-offer.component';
 import { UserClosedOffersComponent } from './user-closed-offers/user-closed-offers.component';
 import { CreateComponent } from './create/create.component';
 import { DeleteComponent } from './delete/delete.component';
 import { EditComponent } from './edit/edit.component';
-import { LogoutComponent } from './logout/logout.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 import { AuthGuardService } from './guards/authGuard';
 import { UsersGuardService } from './guards/userGuard';
 

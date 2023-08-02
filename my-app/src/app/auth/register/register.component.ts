@@ -1,5 +1,5 @@
 import { Component,  } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -49,13 +49,13 @@ export class RegisterComponent {
 
     if (lastname) {
       if (lastname.length < 2) {
-        this.authService.Error = ['First name must be at least 2 characters!']
+        this.authService.Error = ['Last name must be at least 2 characters!']
         return
       }
     }
 
     if (password) {
-      if (password.length < 2) {
+      if (password.length < 5) {
         this.authService.Error = ['Password must be at least 5 characters!']
         return
       }

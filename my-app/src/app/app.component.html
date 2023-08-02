@@ -5,9 +5,8 @@
     </header>
 
     <main>
-        <div class="error-box" *ngIf="errorArray">
-            <p *ngFor="let err of errorArray">{{err}}</p>
-        </div>
+        <app-error-handling></app-error-handling>
+        
         <router-outlet></router-outlet>
     </main>
 
