@@ -21,6 +21,7 @@ import { EditComponent } from './edit/edit.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AuthGuardService } from './guards/authGuard';
 import { UsersGuardService } from './guards/userGuard';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { UsersGuardService } from './guards/userGuard';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule,
   ],
   providers: [AuthService,ItemsService,AuthGuardService,UsersGuardService],
   bootstrap: [AppComponent]

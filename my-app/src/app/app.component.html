@@ -1,58 +1,15 @@
+<div id="page-content">
 
-    <div id="page-content" >
+    <header>
+        <app-navigation></app-navigation>
+    </header>
 
-        <header>
-            <a routerLink="/home" class="title-logo">
-                <img src="/assets/logo.png">
-                <span>Auction House</span>
-            </a>
-            <nav class="main-nav nav-mid">
-                <ul>
-                    <li>
-                        <a routerLink="/catalog">Browse</a>
-                    </li>
-                    <!-- User actions -->
-                    <div *ngIf="user then hasUser; else noUser" ></div>
+    <main>
+        <div class="error-box" *ngIf="errorArray">
+            <p *ngFor="let err of errorArray">{{err}}</p>
+        </div>
+        <router-outlet></router-outlet>
+    </main>
 
-                    <ng-template #hasUser>
-
-                        <li class="user">
-                            <a routerLink="/create">Publish</a>
-                        </li>
-    
-                        
-                        <li class="user">
-                            <a routerLink="/closed">Closed Auctions</a>
-                        </li>
-                         
-    
-                        <li class="user" >
-                            <a routerLink="/logout">Logout</a>
-                        </li>
-                    </ng-template>
-                    <!-- Guest actions -->
-                    <ng-template #noUser>
-
-                        <li class="guest">
-                            <a routerLink="/register">Register</a>
-                        </li>
-                        <li class="guest">
-                            <a routerLink="/login">Login</a>
-                        </li>                       
-                    </ng-template>
-                </ul>
-            </nav>
-        </header>
-
-        <main>
-            
-            <div class="error-box" *ngIf="errorArray">                
-                <p *ngFor="let err of errorArray">{{err}}</p> 
-            </div>
-            
-            <router-outlet></router-outlet>
-        </main>
-
-        <footer>SoftUni &copy; 2022 | Design by Viktor Kostadinov</footer>
-    </div>
-
+    <footer>SoftUni &copy; 2022 | Design by Viktor Kostadinov</footer>
+</div>
