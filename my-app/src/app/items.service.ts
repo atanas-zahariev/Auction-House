@@ -20,60 +20,49 @@ export class ItemsService {
   };
 
 
-  setHeaders() {
-    const argument = localStorage.getItem('user')
-    if (argument) {
-      return {
-        headers: new HttpHeaders({ 'X-Authorization': argument })
-      }
-    } else {
-      return
-    }
-  }
-
   catalog(): Observable<any> {
     return this.http.get(`${this.url}/catalog`)
   }
 
   details(id: string): Observable<any> {
     return this.http
-      .get(`${this.url}/details/${id}`, this.setHeaders())
+      .get(`${this.url}/details/${id}`)
       .pipe(catchError(this.handleError))
   }
 
   offer(id: string, data: any): Observable<any> {
     return this.http
-      .post(`${this.url}/details/${id}`, data, this.setHeaders())
+      .post(`${this.url}/details/${id}`, data)
       .pipe(catchError(this.handleError))
   }
 
   closeOffer(id: string): Observable<any> {
     return this.http
-      .get(`${this.url}/userAction/${id}`, this.setHeaders())
+      .get(`${this.url}/userAction/${id}`)
       .pipe(catchError(this.handleError))
   }
 
   userClosedOffers(): Observable<any> {
     return this.http
-      .get(`${this.url}/closed`, this.setHeaders())
+      .get(`${this.url}/closed`)
       .pipe(catchError(this.handleError))
   }
 
   create(data: any): Observable<any> {
     return this.http
-      .post(`${this.url}/create`, data, this.setHeaders())
+      .post(`${this.url}/create`, data)
       .pipe(catchError(this.handleError))
   }
 
   edit(data: any, id: string): Observable<any> {
     return this.http
-      .post(`${this.url}/edit/${id}`, data, this.setHeaders())
+      .post(`${this.url}/edit/${id}`, data)
       .pipe(catchError(this.handleError))
   }
 
   delete(id: string): Observable<any> {
     return this.http
-      .get(`${this.url}/delete/${id}`,this.setHeaders())
+      .get(`${this.url}/delete/${id}`)
       .pipe(catchError(this.handleError))
   }
 

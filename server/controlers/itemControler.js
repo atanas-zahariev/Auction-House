@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const { addInCollection, createItem, getAllItem, getItemById, editItem, deleteItem, closeOffer } = require('../services/itemService');
 const errorParser = require('../utyl/parser');
 
@@ -17,6 +16,7 @@ itemControler.post('/create',  async (req, res) => {
         owner: req.user._id
     }
     try {
+
         const result = await createItem(item)
         res.json(result)
     } catch (error) {
@@ -36,7 +36,7 @@ itemControler.get('/catalog', async (req, res) => {
     res.json(obj)
 });
 
-itemControler.get('/details/:id', async (req, res) => {
+itemControler.get('/details/:id',async (req, res) => {
     try {
         const item = await getItemById(req.params.id);
         const obj = {
@@ -50,7 +50,8 @@ itemControler.get('/details/:id', async (req, res) => {
     }
 })
 
-itemControler.post('/details/:id', async (req, res) => {
+
+itemControler.post('/details/:id',  async (req, res) => {
     try {
         const item = await getItemById(req.params.id);
         await addInCollection(item._id, req.user._id, req.body.price);
@@ -69,7 +70,7 @@ itemControler.post('/details/:id', async (req, res) => {
 
 
 itemControler.post('/edit/:id',  async (req, res) => {
-    
+
     const { title, category, imgUrl, price, description } = req.body;
 
     const edited = {
@@ -89,11 +90,12 @@ itemControler.post('/edit/:id',  async (req, res) => {
     }
 });
 
-itemControler.get('/delete/:id',  async (req, res) => {
+
+itemControler.get('/delete/:id', async (req, res) => {
     try {
         await deleteItem(req.params.id);
-    
-        res.end();        
+
+        res.end();
     } catch (error) {
         const message = errorParser(error);
         res.status(401).json(message)
@@ -102,9 +104,8 @@ itemControler.get('/delete/:id',  async (req, res) => {
 
 itemControler.get('/userAction/:id', async (req, res) => {
     try {
-        
         await closeOffer(req.params.id)
-    
+
         res.end()
     } catch (error) {
         const message = errorParser(error);
@@ -115,11 +116,10 @@ itemControler.get('/userAction/:id', async (req, res) => {
 
 itemControler.get('/closed', async (req, res) => {
     try {
-        
         let items = await getAllItem()
-    
+
         items = items.filter(x => x.description == 'isClosed' && x.owner.toString() == req.user._id);
-        
+
         const obj = {
             items,
             user: req.user

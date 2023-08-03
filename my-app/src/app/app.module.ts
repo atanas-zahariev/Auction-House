@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,7 @@ import { UsersGuardService } from './guards/userGuard';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
+import { appInterceptorProvider } from './interceptor/appInerceptor';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,13 @@ import { AuthModule } from './auth/auth.module';
     SharedModule,
     AuthModule
   ],
-  providers: [AuthService,ItemsService,AuthGuardService,UsersGuardService],
+  providers: [
+    AuthService,
+    ItemsService,
+    AuthGuardService,
+    UsersGuardService,
+    appInterceptorProvider
+  ],
   bootstrap: [AppComponent]
 })
 

@@ -17,18 +17,6 @@ export class AuthService {
   }
 
 
-  setHeaders() {
-    const argument = localStorage.getItem('user')
-    
-    if (argument) {
-      return {
-        headers: new HttpHeaders({ 'X-Authorization': argument })
-      }
-    } else {
-      return
-    }
-  };
-
   register(data: any): Observable<any> {
     return this.http
       .post(`${this.url}/register`, data)
@@ -37,7 +25,7 @@ export class AuthService {
 
   logout(data: any): Observable<any> {
     return this.http
-      .get(`${this.url}/logout`, this.setHeaders())
+      .get(`${this.url}/logout`)
   }
 
   login(data: any) {

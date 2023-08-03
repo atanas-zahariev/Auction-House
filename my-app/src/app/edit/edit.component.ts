@@ -75,7 +75,6 @@ export class EditComponent {
     }
 
     if (price) {
-      console.log(price)
       if (Number(price) <= 0) {
         this.itemsService.Error = ['This price cannot be real.']
         return;
