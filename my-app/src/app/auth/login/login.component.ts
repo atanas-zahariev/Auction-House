@@ -1,5 +1,5 @@
 import { Component, } from '@angular/core';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -20,8 +20,6 @@ export class LoginComponent  {
   } 
 
   onSubmit() {
-    const { email, password } = this.loginForm.value;
-
 
     if (Object.values(this.loginForm.value).some(x => !x)) {
       this.authService.Error = ['All fields are required!']

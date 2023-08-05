@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
-import { ItemsService } from 'src/app/items.service';
+import { AuthService } from 'src/services/auth.service';
+import { ItemsService } from 'src/services/items.service';
 
 @Component({
   selector: 'app-error-handling',

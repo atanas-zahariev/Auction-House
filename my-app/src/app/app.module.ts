@@ -17,8 +17,8 @@ import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { DeleteComponent } from './delete/delete.component';
 
-import { AuthService } from './auth.service';
-import { ItemsService } from './items.service';
+import { AuthService } from '../services/auth.service';
+import { ItemsService } from '../services/items.service';
 import { AuthGuardService } from './guards/authGuard';
 import { UsersGuardService } from './guards/userGuard';
 

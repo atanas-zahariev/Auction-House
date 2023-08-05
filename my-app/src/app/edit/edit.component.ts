@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ItemsService } from '../items.service';
+import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { itemI } from '../shared/interfaces/itemInterfaces';

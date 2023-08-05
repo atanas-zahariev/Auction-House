@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,9 +12,7 @@ export class LogoutComponent {
     private authService:AuthService,
     private route:Router
     ){
-    const argument = localStorage.getItem('user')
-
-      this.authService.logout(argument).subscribe(
+      this.authService.logout().subscribe(
         () => {
           localStorage.clear()
           this.route.navigate(['/'])
