@@ -13,7 +13,7 @@ export class UsersGuardService implements CanActivate {
         if (localStorage.getItem('user')) {
             return true
         } else {
-            this.route.navigate(['/login'])
+            this.route.navigate(['/auth/login'])
             return true;
         }
     }
