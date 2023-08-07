@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ItemsService } from '../items.service';
-import { itemI } from '../shared/interfaces/itemInterfaces';
+import { ItemsService } from '../../services/items.service';
+import { itemI } from '../../shared/interfaces/itemInterfaces';
 
 @Component({
   selector: 'app-user-closed-offers',

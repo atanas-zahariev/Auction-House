@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ItemsService } from '../items.service';
+import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ export class CloseOfferComponent {
     const id = this.activRoute.snapshot.params['id']
     this.itemsService.closeOffer(id).subscribe(
       (data) => {
-        this.route.navigate(['/closed'])
+        this.route.navigate(['/item/closed'])
       },
       (error) => {
         this.itemsService.getError(error.error)

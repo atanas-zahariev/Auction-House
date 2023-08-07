@@ -1,9 +1,9 @@
 import { Component,  } from '@angular/core';
-import { ItemsService } from '../items.service';
+import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute } from '@angular/router';
-import { itemI } from '../shared/interfaces/itemInterfaces';
+import { itemI } from '../../shared/interfaces/itemInterfaces';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-details',

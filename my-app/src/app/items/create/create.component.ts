@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ItemsService } from '../items.service';
+import { ItemsService } from '../../services/items.service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -74,7 +74,7 @@ export class CreateComponent {
     this.itemsService.create(this.createForm.value).subscribe(
       (data) => {
         this.itemsService.cleanErrors()
-        this.route.navigate(['/catalog'])
+        this.route.navigate(['/item/catalog'])
       },
       (error) => {
         this.itemsService.getError(error.error)

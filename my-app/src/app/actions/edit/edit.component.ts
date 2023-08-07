@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ItemsService } from '../items.service';
+import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { itemI } from '../shared/interfaces/itemInterfaces';
+import { itemI } from '../../shared/interfaces/itemInterfaces';
 
 @Component({
   selector: 'app-edit',
@@ -92,7 +92,7 @@ export class EditComponent {
     this.itemsService.edit(this.editForm.value,id).subscribe(
       (data) => {
         this.itemsService.cleanErrors()
-        this.route.navigate([`/details/${id}`])
+        this.route.navigate([`/action/details/${id}`])
       },
       (error) => {
       

@@ -10,8 +10,6 @@ function hasUser() {
 }
 
 
-
-
 module.exports = {
     hasUser,    
 }

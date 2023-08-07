@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ItemsService } from '../items.service';
+import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class DeleteComponent {
       this.itemsService.delete(id).subscribe(
         () => {
           this.itemsService.cleanErrors()
-          this.router.navigate(['/catalog'])
+          this.router.navigate(['/item/catalog'])
         },
         (error) => {
           this.itemsService.getError(error.error);

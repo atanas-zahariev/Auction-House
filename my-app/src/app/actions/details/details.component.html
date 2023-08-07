@@ -52,8 +52,8 @@
         <h1 class="item">
             {{item?.title}}
             <div class="f-right">
-                <a class="action pad-small f-left" routerLink="/edit/{{item?._id}}">Edit</a>
-                <a class="action pad-small f-left" routerLink="/delete/{{item?._id}}">Delete</a>
+                <a class="action pad-small f-left" routerLink="/action/edit/{{item?._id}}">Edit</a>
+                <a class="action pad-small f-left" routerLink="/action/delete/{{item?._id}}">Delete</a>
             </div>
         </h1>
         <div class="item padded">
@@ -79,7 +79,7 @@
                             <div *ngIf="item?.bider then hasBider; else noBider"></div>
                             <ng-template #hasBider>
                                 Bid by <strong>{{item?.bider?.firstname}}</strong>
-                                <a class="action pad-med cta" routerLink="/userAction/{{item?._id}}">Close Auction</a>
+                                <a class="action pad-med cta" routerLink="/action/userAction/{{item?._id}}">Close Auction</a>
                             </ng-template>
 
                             <ng-template #noBider>
