@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('./vars.css');
-@import url('./theme.css');
-@import url('./layout.css');
-@import url('./layout-header.css');
-@import url('./layout-section.css');
-@import url('./layout-position.css');
-@import url('./layout-forms.css');
+@import url('./styles/vars.css');
+@import url('./styles/theme.css');
+@import url('./styles/layout.css');
+@import url('./styles/layout-header.css');
+@import url('./styles/layout-section.css');
+@import url('./styles/layout-position.css');
+@import url('./styles/layout-forms.css');
 
 .style-divider {
     background-color: red;
