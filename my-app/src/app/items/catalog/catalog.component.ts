@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ItemsService } from '../../services/items.service';
 import {  itemI } from '../../shared/interfaces/itemInterfaces';
+import { ItemsService } from 'src/app/services/items.service';
 
 @Component({
   selector: 'app-catalog',

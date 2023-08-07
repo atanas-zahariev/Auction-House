@@ -20,8 +20,6 @@ export class LoginComponent  {
   } 
 
   onSubmit() {
-    const { email, password } = this.loginForm.value;
-
 
     if (Object.values(this.loginForm.value).some(x => !x)) {
       this.authService.Error = ['All fields are required!']

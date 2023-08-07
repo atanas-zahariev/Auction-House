@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable, Provider } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, catchError, throwError } from "rxjs";
 
 @Injectable()
 export class AppIterceptor implements HttpInterceptor {
@@ -27,7 +27,12 @@ export class AppIterceptor implements HttpInterceptor {
         }
 
 
-        return next.handle(req)
+        return next.handle(req).pipe(
+            catchError((err) => {
+                console.log(err)
+                return throwError(err)
+            })
+        )
     }
 }
 

@@ -8,14 +8,15 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HomeComponent } from './home/home.component'
 
-import { AuthService } from './services/auth.service';
-import { ItemsService } from './services/items.service';
-import { AuthGuardService } from './shared/guards/authGuard';
-import { UsersGuardService } from './shared/guards/userGuard';
+
 
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { appInterceptorProvider } from './interceptor/appInerceptor';
+import { AuthService } from './services/auth.service';
+import { ItemsService } from './services/items.service';
+import { AuthGuardService } from './shared/guards/authGuard';
+import { UsersGuardService } from './shared/guards/userGuard';
 
 @NgModule({
   declarations: [

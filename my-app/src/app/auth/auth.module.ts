@@ -12,7 +12,7 @@ import { authRoutingModule } from './auth-routing.modul';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    LogoutComponent
+    LogoutComponent,
   ],
   imports: [
     CommonModule,
