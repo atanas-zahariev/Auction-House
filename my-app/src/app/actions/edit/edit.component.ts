@@ -53,6 +53,11 @@ export class EditComponent {
 
     const IMAGE_URL = /^https?:\/\/.*/i
 
+    if(Object.values(this.editForm.value).some(x => !x)){
+      this.itemsService.Error = ['All fields are required!'];
+      return;
+    }
+
     if (title?.length) {
       if (title.length < 4) {
         this.itemsService.Error = ['Title must be at least 4 characters.']
@@ -72,7 +77,7 @@ export class EditComponent {
         this.itemsService.Error = ['Invalid Url.']
         return
       }
-    }
+    } 
 
     if (price) {
       if (Number(price) <= 0) {

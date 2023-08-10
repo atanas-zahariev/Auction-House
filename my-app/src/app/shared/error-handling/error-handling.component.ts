@@ -19,7 +19,7 @@ export class ErrorHandlingComponent {
     } else if (this.itemService.Error.length > 0) {
       return this.itemService.Error
     } else {
-      return
+      return undefined;
     }
   }
 }
