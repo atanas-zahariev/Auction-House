@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-logout',
@@ -10,7 +11,8 @@ import { Router } from '@angular/router';
 export class LogoutComponent {
   constructor(
     private authService:AuthService,
-    private route:Router
+    private route:Router,
+    private errorService : ErrorService
     ){
       this.authService.logout().subscribe(
         () => {
@@ -18,7 +20,7 @@ export class LogoutComponent {
           this.route.navigate(['/'])
         },
         (error) => {
-          this.authService.getError(error.error)
+          this.errorService.getError(error.error)
         }
       )
     }

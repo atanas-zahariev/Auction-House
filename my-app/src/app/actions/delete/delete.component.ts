@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-delete',
@@ -11,17 +12,18 @@ export class DeleteComponent {
    constructor(
     private itemsService: ItemsService,
     private router: Router,
-    private activRoute: ActivatedRoute
+    private activRoute: ActivatedRoute,
+    private errorService: ErrorService
     ){
       const id = this.activRoute.snapshot.params['id']
 
       this.itemsService.delete(id).subscribe(
         () => {
-          this.itemsService.cleanErrors()
+          this.errorService.cleanErrors()
           this.router.navigate(['/item/catalog'])
         },
         (error) => {
-          this.itemsService.getError(error.error);
+          this.errorService.getError(error.error);
         }
       )
     }

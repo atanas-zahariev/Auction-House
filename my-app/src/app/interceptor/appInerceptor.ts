@@ -1,9 +1,13 @@
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable, Provider } from "@angular/core";
+import { Router } from "@angular/router";
 import { Observable, catchError, throwError } from "rxjs";
 
 @Injectable()
 export class AppIterceptor implements HttpInterceptor {
+    constructor(
+        private route : Router
+        ){}
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         const token = localStorage.getItem('user')
@@ -29,7 +33,11 @@ export class AppIterceptor implements HttpInterceptor {
 
         return next.handle(req).pipe(
             catchError((err) => {
-                console.log(err)
+                if(err.error[0] == 'Invalid authorization token'){
+                    localStorage.clear()
+                    this.route.navigate(['/auth/login'])
+                    //return throwError(['You are not authorized'])
+                }
                 return throwError(err)
             })
         )

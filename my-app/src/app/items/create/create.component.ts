@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ItemsService } from '../../services/items.service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-create',
@@ -12,7 +13,8 @@ export class CreateComponent {
   constructor(
     private itemsService: ItemsService,
     private route: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private errorService: ErrorService
   ) { }
 
   createForm = this.fb.group({
@@ -31,41 +33,41 @@ export class CreateComponent {
     const IMAGE_URL = /^https?:\/\/.*/i
 
     if (Object.values(this.createForm.value).some(x => !x)) {
-      this.itemsService.Error = ['All fields are required']
+      this.errorService.Error = ['All fields are required']
       return;
     }
 
     if (title?.length) {
       if (title.length < 4) {
-        this.itemsService.Error = ['Title must be at least 4 characters.']
+        this.errorService.Error = ['Title must be at least 4 characters.']
         return;
       }
     }
 
     if (category) {
       if (!arrOfCategories.includes(category)) {
-        this.itemsService.Error = ['It is not in the list of categories.']
+        this.errorService.Error = ['It is not in the list of categories.']
         return;
       }
     }
 
     if (imgUrl) {
       if (!IMAGE_URL.test(imgUrl)) {
-        this.itemsService.Error = ['Invalid Url.']
+        this.errorService.Error = ['Invalid Url.']
         return
       }
     }
 
     if (price) {
       if (Number(price) <= 0) {
-        this.itemsService.Error = ['This price cannot be real.']
+        this.errorService.Error = ['This price cannot be real.']
         return;
       }
     }
 
     if (description) {
       if (description.length > 200) {
-        this.itemsService.Error = ['Description must be at most 200 characters.']
+        this.errorService.Error = ['Description must be at most 200 characters.']
         return;
       }
     }
@@ -73,11 +75,11 @@ export class CreateComponent {
 
     this.itemsService.create(this.createForm.value).subscribe(
       (data) => {
-        this.itemsService.cleanErrors()
+        this.errorService.cleanErrors()
         this.route.navigate(['/item/catalog'])
       },
       (error) => {
-        this.itemsService.getError(error.error)
+        this.errorService.getError(error.error)
       }
     )
   }

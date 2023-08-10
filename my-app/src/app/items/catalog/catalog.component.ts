@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {  itemI } from '../../shared/interfaces/itemInterfaces';
 import { ItemsService } from 'src/app/services/items.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-catalog',
@@ -10,9 +11,12 @@ import { ItemsService } from 'src/app/services/items.service';
 export class CatalogComponent {
   items:itemI[] = []
   hasLenght:boolean = false
-  constructor(private itemService : ItemsService) { 
+  constructor(
+    private itemService : ItemsService,
+    private errorService: ErrorService
+    ) { 
 
-    this.itemService.cleanErrors();
+    this.errorService.cleanErrors();
 
     this.itemService.catalog().subscribe(
       (data) => {
@@ -22,7 +26,7 @@ export class CatalogComponent {
         }
       },
       (error) => {
-        this.itemService.getError(error.error) ;
+        this.errorService.getError(error.error) ;
       }
     )
   };

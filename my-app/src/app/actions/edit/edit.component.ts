@@ -3,6 +3,7 @@ import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { itemI } from '../../shared/interfaces/itemInterfaces';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-edit',
@@ -24,6 +25,7 @@ export class EditComponent {
     private itemsService: ItemsService,
     private activRoute: ActivatedRoute,
     private route: Router,
+    private errorService: ErrorService
   ) {
     const id = this.activRoute.snapshot.params['id']
     this.itemsService.details(id).subscribe(
@@ -32,6 +34,9 @@ export class EditComponent {
           this.hasBider = true
         }
         this.editItem(data.item)
+      },
+      (error) => {      
+        this.errorService.getError(error.error)
       }
     )
   }
@@ -54,41 +59,41 @@ export class EditComponent {
     const IMAGE_URL = /^https?:\/\/.*/i
 
     if(Object.values(this.editForm.value).some(x => !x)){
-      this.itemsService.Error = ['All fields are required!'];
+      this.errorService.Error = ['All fields are required!'];
       return;
     }
 
     if (title?.length) {
       if (title.length < 4) {
-        this.itemsService.Error = ['Title must be at least 4 characters.']
+        this.errorService.Error = ['Title must be at least 4 characters.']
         return;
       }
     }
 
     if (category) {
       if (!arrOfCategories.includes(category)) {
-        this.itemsService.Error = ['It is not in the list of categories.']
+        this.errorService.Error = ['It is not in the list of categories.']
         return;
       }
     }
 
     if (imgUrl) {
       if (!IMAGE_URL.test(imgUrl)) {
-        this.itemsService.Error = ['Invalid Url.']
+        this.errorService.Error = ['Invalid Url.']
         return
       }
     } 
 
     if (price) {
       if (Number(price) <= 0) {
-        this.itemsService.Error = ['This price cannot be real.']
+        this.errorService.Error = ['This price cannot be real.']
         return;
       }
     }
 
     if (description) {
       if (description.length > 200) {
-        this.itemsService.Error = ['Description must be at most 200 characters.']
+        this.errorService.Error = ['Description must be at most 200 characters.']
         return;
       }
     }
@@ -96,12 +101,12 @@ export class EditComponent {
     const id = this.activRoute.snapshot.params['id']
     this.itemsService.edit(this.editForm.value,id).subscribe(
       (data) => {
-        this.itemsService.cleanErrors()
+        this.errorService.cleanErrors()
         this.route.navigate([`/action/details/${id}`])
       },
       (error) => {
       
-        this.itemsService.getError(error.error)
+        this.errorService.getError(error.error)
       }
     )
   }

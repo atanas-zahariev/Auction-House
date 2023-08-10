@@ -13,12 +13,6 @@ export class ItemsService {
 
   constructor(private http: HttpClient) { }
 
-  Error: string[] = []
-
-  cleanErrors() {
-    this.Error = []
-  };
-
 
   catalog(): Observable<any> {
     return this.http.get(`${this.url}/catalog`)
@@ -59,13 +53,4 @@ export class ItemsService {
       .get(`${this.url}/delete/${id}`)
   }
 
-  getError(data: any) {
-    if (Array.isArray(data)) {
-      this.Error = data
-    } else if (typeof data == 'string') {
-      this.Error = data.split('\n')
-    } else if (typeof data == 'object') {
-      this.Error = ['There seems to be a problem please try again later']
-    }
-  }
 }

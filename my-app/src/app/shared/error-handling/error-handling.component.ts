@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { ItemsService } from 'src/app/services/items.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-error-handling',
@@ -9,17 +8,16 @@ import { ItemsService } from 'src/app/services/items.service';
 })
 export class ErrorHandlingComponent {
 
-  constructor(private authService: AuthService, private itemService: ItemsService) {
-    this.authService.cleanErrors()
+  constructor(private errorService: ErrorService) {
+    this.errorService.cleanErrors()
   };
 
   get errorArray(): string[] | undefined {
-    if (this.authService.Error.length > 0) {
-      return this.authService.Error
-    } else if (this.itemService.Error.length > 0) {
-      return this.itemService.Error
-    } else {
-      return undefined;
-    }
+    if (this.errorService.Error.length > 0) {
+      return this.errorService.Error
+    }else{
+      return undefined
+    } 
+   
   }
 }

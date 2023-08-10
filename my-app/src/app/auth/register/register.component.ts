@@ -2,6 +2,7 @@ import { Component,  } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-register',
@@ -18,8 +19,8 @@ export class RegisterComponent {
     repass: new FormControl(''),
   })
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.authService.cleanErrors()
+  constructor(private authService: AuthService, private router: Router, private errorService : ErrorService) {
+    this.errorService.cleanErrors()
   };
 
 
@@ -29,41 +30,41 @@ export class RegisterComponent {
     const REGEX_FOR_Email = /^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]+$/m
 
     if (Object.values(this.registrationForm.value).some(x => x == '')) {
-      this.authService.Error = ['All fields are required!']
+      this.errorService.Error = ['All fields are required!']
       return
     }
 
     if (email) {
       if (!REGEX_FOR_Email.test(email)) {
-        this.authService.Error = ['Incorect email!']
+        this.errorService.Error = ['Incorect email!']
         return
       }
     }
 
     if (firstname) {
       if (firstname.length < 2) {
-        this.authService.Error = ['First name must be at least 2 characters!']
+        this.errorService.Error = ['First name must be at least 2 characters!']
         return
       }
     }
 
     if (lastname) {
       if (lastname.length < 2) {
-        this.authService.Error = ['Last name must be at least 2 characters!']
+        this.errorService.Error = ['Last name must be at least 2 characters!']
         return
       }
     }
 
     if (password) {
       if (password.length < 5) {
-        this.authService.Error = ['Password must be at least 5 characters!']
+        this.errorService.Error = ['Password must be at least 5 characters!']
         return
       }
     }
 
     if(password || repass){
       if(password != repass){
-        this.authService.Error = ['The passwords do not match!']
+        this.errorService.Error = ['The passwords do not match!']
         return
       }
     }
@@ -72,11 +73,11 @@ export class RegisterComponent {
       (data) => {
         localStorage.setItem('user', JSON.stringify(data));
         this.router.navigate(['/'])
-        this.authService.cleanErrors()
+        this.errorService.cleanErrors()
 
       },
       (error) => {
-        this.authService.getError(error.error)
+        this.errorService.getError(error.error)
         this.registrationForm.reset()
       }
     )

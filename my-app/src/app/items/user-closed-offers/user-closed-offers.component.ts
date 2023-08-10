@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ItemsService } from '../../services/items.service';
 import { itemI } from '../../shared/interfaces/itemInterfaces';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-user-closed-offers',
@@ -11,7 +12,10 @@ export class UserClosedOffersComponent {
   items: itemI[] = []
   hasLenght: boolean = false
 
-  constructor(private itemsService: ItemsService) {
+  constructor(
+    private itemsService: ItemsService,
+    private errorService: ErrorService
+    ) {
     this.itemsService.userClosedOffers().subscribe(
       (data) => {
         this.items = data.items;
@@ -21,7 +25,7 @@ export class UserClosedOffersComponent {
 
       },
       (error) => {
-        this.itemsService.getError(error.error)
+        this.errorService.getError(error.error)
       }
     )
   }
