@@ -5,6 +5,9 @@ import { UserClosedOffersComponent } from './user-closed-offers/user-closed-offe
 import { CreateComponent } from './create/create.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { itemRoutingModule } from './item-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { IItemsState } from './+store';
+import { catalogReducer } from './+store/reducer';
 
 
 
@@ -18,6 +21,9 @@ import { itemRoutingModule } from './item-routing.module';
     CommonModule,
     itemRoutingModule,
     ReactiveFormsModule,
+    StoreModule.forFeature<IItemsState>('items',{
+      catalog:catalogReducer
+    })
   ]
 })
 

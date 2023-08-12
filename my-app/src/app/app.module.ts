@@ -17,6 +17,7 @@ import { AuthService } from './services/auth.service';
 import { ItemsService } from './services/items.service';
 import { AuthGuardService } from './shared/guards/authGuard';
 import { UsersGuardService } from './shared/guards/userGuard';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { UsersGuardService } from './shared/guards/userGuard';
     ReactiveFormsModule,
     CoreModule,
     SharedModule,
+    StoreModule.forRoot({ }),
   ],
   providers: [
     AuthService,

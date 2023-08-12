@@ -1,7 +1,7 @@
 <section id="catalog-section" class="spaced">
 
     <h1 class="item">Auctions</h1>
-    <div *ngIf="hasLenght then isItems; else noItems"></div>
+    <div *ngIf="(hasLenght |async)  then isItems; else noItems"></div>
     <ng-template #isItems>
         <ul class="catalog cards">
             <li class="item" *ngFor="let item of items">
