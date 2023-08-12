@@ -3,7 +3,7 @@
 
     <h1 class="item">Closed Auctions</h1>
    
-    <div *ngIf="hasLenght then isLength else nolength"></div>
+    <div *ngIf="(hasLenght| async) then isLength else nolength"></div>
 
     <ng-template #isLength>
         <ul class="catalog cards">

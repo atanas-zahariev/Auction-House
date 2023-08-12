@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { itemRoutingModule } from './item-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { IItemsState } from './+store';
-import { catalogReducer } from './+store/reducer';
+import { catalogReducer, userClosedOffersReducer } from './+store/reducer';
 
 
 
@@ -22,7 +22,8 @@ import { catalogReducer } from './+store/reducer';
     itemRoutingModule,
     ReactiveFormsModule,
     StoreModule.forFeature<IItemsState>('items',{
-      catalog:catalogReducer
+      catalog:catalogReducer,
+      closed:userClosedOffersReducer
     })
   ]
 })

@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { ICatalogPageState } from ".";
-import { verifyLength } from "./actions";
+import { ICatalogPageState, IUserClosedOffersPage } from ".";
+import { userClosedOffersLength, verifyLength } from "./actions";
 
 
 export const catalogReducer = createReducer<ICatalogPageState>(
@@ -12,5 +12,17 @@ export const catalogReducer = createReducer<ICatalogPageState>(
             ...state,
             isLengt:true
         }
+    })
+)
+
+export const userClosedOffersReducer = createReducer<IUserClosedOffersPage>(
+    {
+        hasClosed:false
+    },
+    on(userClosedOffersLength,(state) => {
+       return{
+        ...state,
+        hasClosed:true
+       }
     })
 )
