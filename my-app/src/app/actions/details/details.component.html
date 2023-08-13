@@ -24,7 +24,7 @@
                             Current price: $<strong>{{item?.price}}</strong>
                         </div>
                        
-                        <div *ngIf="user then hasUser"></div>
+                        <div *ngIf="(user|async) then hasUser"></div>
                         <ng-template #hasUser>
                             <div *ngIf="currentHigherOffer">
                                 You are currently the <strong>highest bidder</strong> for this auction

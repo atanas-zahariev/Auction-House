@@ -1,8 +1,10 @@
 import { createAction } from "@ngrx/store"
 
 
-const profileDomain = '[CatalogComponent]'
+const catalogDomain = '[CatalogComponent]'
 
-export const verifyLength = createAction(`${profileDomain} Verify Length`)
+const userClosedDomain = '[UserClosedComponent]'
 
-export const userClosedOffersLength = createAction(`${profileDomain} User Closed Offers`)
+export const verifyLength = createAction(`${catalogDomain} Verify Length`)
+
+export const userClosedOffersLength = createAction(`${userClosedDomain} User Closed Offers`)

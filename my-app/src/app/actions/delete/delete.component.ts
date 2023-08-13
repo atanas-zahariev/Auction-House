@@ -16,15 +16,19 @@ export class DeleteComponent {
     private errorService: ErrorService
     ){
       const id = this.activRoute.snapshot.params['id']
+      
+      const  confirmation = confirm('are you shour to delete that article?')
 
-      this.itemsService.delete(id).subscribe(
-        () => {
-          this.errorService.cleanErrors()
-          this.router.navigate(['/item/catalog'])
-        },
-        (error) => {
-          this.errorService.getError(error.error);
-        }
-      )
+      if(confirmation){
+        this.itemsService.delete(id).subscribe(
+          () => {
+            this.errorService.cleanErrors()
+            this.router.navigate(['/item/catalog'])
+          },
+          (error) => {
+            this.errorService.getError(error.error);
+          }
+        )
+      }
     }
 }

@@ -7,7 +7,7 @@ export const catalogReducer = createReducer<ICatalogPageState>(
     {
         isLengt:false
     },
-    on(verifyLength,(state,action) => {
+    on(verifyLength,(state) => {
         return {
             ...state,
             isLengt:true

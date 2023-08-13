@@ -36,7 +36,6 @@ export class AppIterceptor implements HttpInterceptor {
                 if(err.error[0] == 'Invalid authorization token'){
                     localStorage.clear()
                     this.route.navigate(['/auth/login'])
-                    //return throwError(['You are not authorized'])
                 }
                 return throwError(err)
             })

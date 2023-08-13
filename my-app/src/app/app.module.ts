@@ -32,6 +32,7 @@ import { StoreModule } from '@ngrx/store';
     CoreModule,
     SharedModule,
     StoreModule.forRoot({ }),
+    StoreModule.forRoot({}, {}),
   ],
   providers: [
     AuthService,

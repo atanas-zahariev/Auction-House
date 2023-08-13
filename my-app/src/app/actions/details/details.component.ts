@@ -1,20 +1,23 @@
-import { Component, } from '@angular/core';
+import { Component, OnDestroy, } from '@angular/core';
 import { ItemsService } from '../../services/items.service';
 import { ActivatedRoute } from '@angular/router';
 import { itemI } from '../../shared/interfaces/itemInterfaces';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { ErrorService } from 'src/app/services/error.service';
+import { Store } from '@ngrx/store';
+import { IActionsModuleState } from '../+details-store/detail-index';
+import { Observable } from 'rxjs';
+import { removeUser, verifyUser } from '../+details-store/details-actions';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnDestroy {
   isOwner: boolean = false
 
-  user: boolean = false
+  user: Observable<boolean> = this.store.select(state => state.actions.details.hasUser)
 
   item: itemI | null = null;
 
@@ -29,17 +32,17 @@ export class DetailsComponent {
   constructor(
     private itemService: ItemsService,
     private route: ActivatedRoute,
-    private authService: AuthService,
-    private errorService : ErrorService
+    private errorService: ErrorService,
+    private store: Store<IActionsModuleState>
   ) {
     const id = this.route.snapshot.params['id']
 
     this.itemService.details(id).subscribe(
       (data) => {
         if (data.user) {
+          this.store.dispatch(verifyUser())
           this.userFirstName = data.user.username;
           this.isOwner = data.item.owner == data.user._id
-          this.user = true
         }
         this.currentHigherOffer = data.item.bider?._id == data.user?._id
         this.item = data.item
@@ -77,5 +80,9 @@ export class DetailsComponent {
       }
     )
 
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(removeUser())
   }
 }
