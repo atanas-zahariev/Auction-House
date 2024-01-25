@@ -5,49 +5,53 @@ import { HttpClient } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { of } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { ErrorService } from 'src/app/services/error.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: jasmine.SpyObj<AuthService>;
-  let mockAuthService: any;
+  let errorService: jasmine.SpyObj<ErrorService>;
   let httpClient: HttpClient;
-  let httpTestingController: HttpTestingController;
 
   @NgModule()
   class FixNavigationTriggeredOutsideAngularZoneNgModule {
     constructor(_router: Router) {
     }
   }
+
   beforeEach(() => {
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    const mockAuthService = jasmine.createSpyObj('AuthService', ['login']);
+    const mockErrorService = jasmine.createSpyObj('ErrorService', ['cleanErrors', 'getError'])
     TestBed.configureTestingModule({
 
       declarations: [LoginComponent],
 
       imports: [
         HttpClientTestingModule,
-        FormsModule,
         ReactiveFormsModule,
-        FixNavigationTriggeredOutsideAngularZoneNgModule
+        // FixNavigationTriggeredOutsideAngularZoneNgModule
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
 
       providers: [
-        { provide: AuthService, useValue: mockAuthService }
+        { provide: AuthService, useValue: mockAuthService },
+        { provide: ErrorService, useValue: mockErrorService },
+        { provide: Router, useValue: routerSpy },
       ]
     });
 
 
     httpClient = TestBed.inject(HttpClient);
-    httpTestingController = TestBed.inject(HttpTestingController);
 
-    mockAuthService = jasmine.createSpyObj('AuthService', ['login']);
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
 
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>
+    errorService = TestBed.inject(ErrorService) as jasmine.SpyObj<ErrorService>;
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
@@ -110,16 +114,15 @@ describe('LoginComponent', () => {
     expect(func).toHaveBeenCalled();
   }))
 
-  it('should call login when form event fire', fakeAsync(() => {
+  it('should call login when form event fire', () => {
     const form = fixture.debugElement.query(By.css('form'))
     const email: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[0];
     const password: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[1];
     const emailValue = 'peter@abv.bg'
     const passwordValue = '123456'
-    
-    authService.login.and.returnValue(of(true))
 
     fixture.detectChanges()
+    authService.login.and.returnValue(of(true))
 
     email.value = emailValue;
     password.value = passwordValue;
@@ -127,25 +130,98 @@ describe('LoginComponent', () => {
     email.dispatchEvent(new Event('input'))
     password.dispatchEvent(new Event('input'))
 
-    tick()
+    fixture.detectChanges()
+
     form.triggerEventHandler('ngSubmit', null)
-    tick()
     fixture.detectChanges()
 
     expect(authService.login).toHaveBeenCalled()
-  }))
+    expect(errorService.cleanErrors).toHaveBeenCalled()
+  })
 
-  it('should not to call login when form event fire', fakeAsync(() => {
-    const form = fixture.debugElement.query(By.css('form'))    
+  it('should not to call login when form event fire', () => {
+    const form = fixture.debugElement.query(By.css('form'))
+    const email: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[0];
+    const password: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[1];
+    const emailValue = ''
+    const passwordValue = ''
+
+    fixture.detectChanges()
     authService.login.and.returnValue(of(true))
 
-    tick()
+    email.value = emailValue;
+    password.value = passwordValue;
+
+    email.dispatchEvent(new Event('input'))
+    password.dispatchEvent(new Event('input'))
+
+    fixture.detectChanges()
     form.triggerEventHandler('ngSubmit', null)
-    tick()
     fixture.detectChanges()
 
     expect(authService.login).not.toHaveBeenCalled()
-  }))
+  })
 
+  it('should navigate after form event fire', () => {
+    const form = fixture.debugElement.query(By.css('form'))
+    const email: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[0];
+    const password: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[1];
+    const emailValue = 'peter@abv.bg'
+    const passwordValue = '123456'
+    const page = new Page()
+
+    fixture.detectChanges()
+    authService.login.and.returnValue(of(true))
+
+    email.value = emailValue;
+    password.value = passwordValue;
+
+    email.dispatchEvent(new Event('input'))
+    password.dispatchEvent(new Event('input'))
+
+    fixture.detectChanges()
+    form.triggerEventHandler('ngSubmit', null)
+    fixture.detectChanges()
+
+    const navArgs = page.navSpy.calls.first().args[0];
+
+    expect(errorService.cleanErrors).toHaveBeenCalled()
+    expect(page.navSpy.calls.any()).withContext('navigate called').toBe(true);
+    expect(navArgs[0]).withContext('nav to Home URL').toContain('/');
+  })
+
+  it('should call getError when error happens with login', () => {
+    const form = fixture.debugElement.query(By.css('form'))
+    const email: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[0];
+    const password: HTMLInputElement = fixture.nativeElement.querySelectorAll('input')[1];
+    const emailValue = 'peterabv.bg'
+    const passwordValue = '123456'
+    
+    fixture.detectChanges()
+    authService.login.and.returnValue(throwError(() => new Error()))
+
+    email.value = emailValue;
+    password.value = passwordValue;
+
+    email.dispatchEvent(new Event('input'))
+    password.dispatchEvent(new Event('input'))
+    
+    fixture.detectChanges()
+    form.triggerEventHandler('ngSubmit', null)
+    fixture.detectChanges()
+
+    expect(errorService.getError).toHaveBeenCalled()
+  })
+
+  class Page {
+    /** Spy on router navigate method */
+    navSpy: jasmine.Spy;
+
+    constructor() {
+      // Get the component's injected router navigation spy
+      const routerSpy = fixture.debugElement.injector.get(Router);
+      this.navSpy = routerSpy.navigate as jasmine.Spy;
+    }
+  }
 
 });//end
